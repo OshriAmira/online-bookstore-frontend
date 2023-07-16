@@ -1,0 +1,11 @@
+<app-navigation-bar [title]="'BOKA - Online Bookstore'"></app-navigation-bar>
+<app-search></app-search>
+<br>
+<!-- <app-banner></app-banner> -->
+<app-banner *ngIf="showBanner"></app-banner>
+
+<br><br>
+<router-outlet></router-outlet>
+<br><br><br><br><br>
+<app-favorites *ngIf="showFavorites"></app-favorites>
+<app-bottom-bar></app-bottom-bar>

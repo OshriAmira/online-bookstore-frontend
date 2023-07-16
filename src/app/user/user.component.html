@@ -1,0 +1,33 @@
+<div class = "container">
+    <div class = "card">
+        <h3 class = "text-center">Users list</h3>
+        <div class = "card-body">
+            <table class = "table table-stiped">
+                <thead>
+                    <th>id</th>
+                    <th>firstName</th>
+                    <th>lastName</th>
+                    <th>email</th>
+                    <th>password</th>
+                    <th>enabled</th>
+                    <th>roles</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let user of users">
+                        <td>{{user.id}}</td>
+                        <td>{{user.firstName}}</td>
+                        <td>{{user.lastName}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.password}}</td>
+                        <td>{{user.enabled}}</td>
+                        <td>{{ getRoleNames(user) }}</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>

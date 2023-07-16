@@ -1,0 +1,29 @@
+<h1 class="text-center">My Favorites List</h1>
+<div class="favorites-container">
+  <ng-container *ngIf="books.length > 0; else noFavorites">
+    <div class="favorite-item" *ngFor="let book of books">
+      <div class="book-details">
+        <div class="book-image" (mouseenter)="setHoveredBook(book)" (mouseleave)="setHoveredBook(null)">
+          <a [routerLink]="['/book-details', book.id]">
+            <img src="{{book.image}}" alt="Book Image">
+          </a>
+          <div class="favorite-icons" *ngIf="isBookHovered(book)">
+            <button class="icon-heart" [ngClass]="{'liked': book.liked}" (click)="toggleLiked(book)">
+              <i class="fas fa-heart"></i>
+            </button>
+            <div class="icon-spacing"></div> <!-- Add a spacer element -->
+            <button class="icon-cart" [ngClass]="{'added': cartItem.added}" (click)="toggleAdded(cartItem)">
+              <i class="fas fa-shopping-cart"></i>
+            </button>
+          </div>
+          <h3>{{ book.title }}</h3>
+          <p>{{ book.authorName }}</p>
+          <h3>{{ book.price }}$</h3>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noFavorites>
+    <h6>There are no products in the favorites list</h6>
+  </ng-template>
+</div>

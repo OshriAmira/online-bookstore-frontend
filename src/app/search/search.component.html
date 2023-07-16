@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <form (submit)="navigateToSearchResults()" class="text-center">
+      <div class="input-group">
+        <input type="text" class="form-control search-input" [(ngModel)]="searchText" name="searchText" placeholder="Search Name or Author" aria-label="Search" aria-describedby="search-icon">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+        </div>  
+      </div>
+      <div class="advanced-search-fields" *ngIf="showAdvancedSearch">
+        <div class="form-group">
+          <label for="price">Price - Maximum price:</label>
+          <input type="number" class="form-control" [(ngModel)]="price" name="price" placeholder="Maximum price" id="price">
+        </div>
+        <div class="form-group">
+          <label for="category">Category:</label>
+          <select class="form-control" [(ngModel)]="category" name="category" id="category">
+            <option value="">Select a category</option>
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="advanced-search-toggle">
+        <button class="btn btn-link" (click)="toggleAdvancedSearch($event)">Advanced Search</button>
+      </div>
+    </form>
+  </div>
+
+  
+  
+  

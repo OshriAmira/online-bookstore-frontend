@@ -1,0 +1,32 @@
+<div class = "container">
+    <div class = "card">
+        <h3 class = "text-center">Order-Items list</h3>
+        <div class = "card-body">
+            <table class = "table table-stiped">
+                <thead>
+                    <th>id</th>
+                    <th>orderID</th>
+                    <th>book name</th>
+                    <th>quantity</th>
+                    <th>price</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let orderItem of orderItems">
+                        <td>{{orderItem.id}}</td>
+                        <td>{{orderItem.orderID}}</td>
+                        <td>{{orderItem.book}}</td>
+                        <td>{{orderItem.quantity}}</td>
+                        <td>{{orderItem.price}}</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+
+

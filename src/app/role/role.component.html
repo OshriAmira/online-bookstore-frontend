@@ -1,0 +1,24 @@
+<div class = "container">
+    <div class = "card">
+        <h3 class = "text-center">Roles list</h3>
+        <div class = "card-body">
+            <table class = "table table-stiped">
+                <thead>
+                    <th>id</th>
+                    <th>name</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let role of roles">
+                        <td>{{role.id}}</td>
+                        <td>{{role.name}}</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+

@@ -1,0 +1,47 @@
+<h6 class = "text-center" *ngIf="this.searchTerm != ''">Search results for: {{this.searchTerm}}</h6>
+<h6 class = "text-center" *ngIf="this.searchPrice > 0"> Books up to price: {{this.searchPrice}}$</h6>
+<h6 class = "text-center" *ngIf="this.searchCategory != ''"> Category: {{this.searchCategory}}</h6>
+<div class = "container">
+    <div class = "card">
+        <h3 class = "text-center">Search Results</h3>
+        <h6 class = "text-center">({{books.length}}) Results</h6>
+        <div class="card-body" *ngIf="books.length > 0">
+            <table class = "table table-stiped">
+                <thead>
+                    <!-- <th>id</th> -->
+                    <th>title</th>
+                    <th>description</th>
+                    <th>price</th>
+                    <th>quantity</th>
+                    <th>authorName</th>
+                    <!-- <th>Category</th> -->
+                    <th>image</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let book of books">
+                        <!-- <td>{{book.id}}</td> -->
+                        <td>{{book.title}}</td>
+                        <td>{{book.description}}</td>
+                        <td>{{book.price}}</td>
+                        <td>{{book.quantity}}</td>
+                        <td>{{book.authorName}}</td>
+                        <!-- <td>{{book.category}}</td> -->
+                        <td>
+                            <a [routerLink]="['/book-details', book.id]">
+                                <img src="{{book.image}}" alt="" height="100" width="80">
+                              </a>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+        <div class="card-body" *ngIf="books.length === 0">
+            <p>No search results found.</p>
+        </div>
+
+    </div>
+
+</div>
+

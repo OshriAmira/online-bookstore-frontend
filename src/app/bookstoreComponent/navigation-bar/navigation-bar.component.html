@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="http://localhost:4200/">{{ title }}</a>
+    <!-- for other screens -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- until here -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a routerLink="/" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/books" ruterLinkActive="active" class="nav-link">Books</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" id="categoriesDropdown" (click)="toggleDropdown()">Categories</a>
+          <div class="dropdown-menu" aria-labelledby="categoriesDropdown" [class.show]="dropdownOpen">
+            <a class="dropdown-item" [routerLink]="['/search-results']" 
+            [queryParams]="{searchTerm: '', searchPrice: 0, searchCategory: category}"
+             *ngFor="let category of categories" (click)="performSearchByCategory(category); toggleDropdown()">
+             {{ category }}</a>
+          </div>
+        </li>                     
+        <li class="nav-item">
+          <a routerLink="/authors" class="nav-link">Authors</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/about" class="nav-link">About Us</a>
+        </li>
+      </ul>
+
+      
+
+      <div class="container">
+        <div class="d-flex justify-content-end">
+          <form class="form-inline">
+            <!-- Login icon -->
+              <a class="nav-link" href="#">
+                <i class="fas fa-user"></i>
+              </a>
+            
+            <!-- Heart icon -->
+              <a routerLink="/favorites" class="nav-link">
+                <i class="fas fa-heart"></i>
+                <span *ngIf="bookService.numLikedItems > 0">{{ bookService.numLikedItems }}</span>
+              </a>
+
+            <!-- Shopping cart icon -->
+              <a routerLink="/shopping-carts" class="nav-link" >
+                <i class="fas fa-shopping-cart"></i>
+              </a>
+   
+          </form>
+        </div>
+      </div>
+
+
+    </div> 
+  </nav>
+
+  
+<br><br>
+  

@@ -1,0 +1,38 @@
+<div class = "container">
+    <div class = "card">
+        <h3 class = "text-center">Books list</h3>
+        <div class = "card-body">
+            <table class = "table table-stiped">
+                <thead>
+                    <th>id</th>
+                    <th>title</th>
+                    <th>description</th>
+                    <th>price</th>
+                    <!-- <th>quantity</th> -->
+                    <th>authorName</th>
+                    <th>image</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let book of books">
+                        <td>{{book.id}}</td>
+                        <td>{{book.title}}</td>
+                        <td>{{book.description}}</td>
+                        <td>{{book.price}}</td>
+                        <!-- <td>{{book.quantity}}</td> -->
+                        <td>{{book.authorName}}</td>
+                        <td>
+                            <a [routerLink]="['/book-details', book.id]">
+                                <img src="{{book.image}}" alt="" height="100" width="80">
+                              </a>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+

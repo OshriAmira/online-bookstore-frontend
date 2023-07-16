@@ -1,0 +1,34 @@
+<div class="book-carousel-container">
+  <carousel>
+    <slide *ngFor="let book of books">
+      <div class="book-slide">
+        <div class="book-details">
+          <div class="book-image">
+            <a [routerLink]="['/book-details', book.id]">
+              <img src="{{book.image}}" alt="" height="100" width="80">
+            </a>
+            <div class="book-details-icons">
+              <button class="icon-heart" [ngClass]="{'liked': book.liked}" (click)="toggleLiked(book)">
+                <i class="fas fa-heart"></i>
+              </button>
+              <div class="icon-spacing"></div> <!-- Add a spacer element -->
+              <button class="icon-cart" [ngClass]="{'added': cartItem.added}" (click)="toggleAdded(cartItem)">
+                <i class="fas fa-shopping-cart"></i>
+              </button>
+            </div>
+          </div>
+          <div class="book-details-title">
+            <h3>{{ book.title }}</h3>
+          </div>
+          <div class="book-details-authorName">
+            <p>{{ book.authorName }}</p>
+          </div>
+          <div class="book-details-price">
+            <h3>{{ book.price }}$</h3>
+          </div>
+        </div>
+      </div>
+      
+    </slide>
+  </carousel>
+</div>

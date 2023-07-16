@@ -1,0 +1,17 @@
+<div class="book-details-container" *ngFor="let book of books">
+    <h6 class = "text-center">Book Details - {{ book.title }} </h6>
+    <div class="book-details-private" >
+      <img src="{{ book.image }}" alt="Book Image" class="book-details-image">
+      <div class="book-details-description">
+        <h2>{{ book.title }}</h2>
+        <p> {{ book.authorName }}</p>
+        <p>Description: {{ book.description }}</p>
+        <div class="book-details-description-price">
+            <h2>{{ book.price }}$</h2>
+            
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
