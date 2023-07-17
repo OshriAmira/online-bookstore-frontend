@@ -32,16 +32,19 @@
                               </a>
                         </td>
                     </tr>
-
                 </tbody>
-
             </table>
         </div>
         <div class="card-body" *ngIf="books.length === 0">
             <p>No search results found.</p>
         </div>
-
     </div>
-
 </div>
 
+<div class="pagination text-center">
+    <div class="pagination-controls">
+      <span [ngClass]="{'disabled': currentPage === 1}" (click)="goToPage(currentPage - 1)">Previous</span>
+      <span *ngFor="let pageNumber of getPageNumbers()" [ngClass]="{'active': pageNumber === currentPage}" (click)="goToPage(pageNumber)">{{pageNumber}}</span>
+      <span [ngClass]="{'disabled': currentPage === totalPages}" (click)="goToPage(currentPage + 1)">Next</span>
+    </div>
+  </div>

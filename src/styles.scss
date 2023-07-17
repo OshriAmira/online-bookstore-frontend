@@ -362,6 +362,40 @@
     z-index: 1;
   }
   
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  
+    .pagination-controls {
+      display: flex;
+    
+      span {
+        padding: 5px 10px;
+        cursor: pointer;
+    
+        &.disabled {
+          color: gray;
+          pointer-events: none;
+        }
+    
+        &.active {
+          color: blue;
+          font-weight: bold;
+        }
+    
+        &.page-number {
+          margin-right: 10px;
+        }
+    
+        &.control {
+          margin-left: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+    
+  }
   
 
   
