@@ -53,8 +53,4 @@ export class SearchComponent {
     event.preventDefault(); // Prevent the form submission
     this.showAdvancedSearch = !this.showAdvancedSearch;
   }
-  
-  
-  
-
 }
