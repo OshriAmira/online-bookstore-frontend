@@ -12,7 +12,12 @@ export class AuthorService {
 
   constructor(private http: HttpClient) { }
 
-  getAuthors(): Observable<Author[]>{
-    return this.http.get<Author[]>(`${this.authorsPageUrl}`);
+  getAuthors(): Observable<Author[]> {
+    return this.http.get<Author[]>(this.authorsPageUrl);
+  }
+
+  createAuthor(name: string): Observable<Author> {
+    const authorData = { name: name };
+    return this.http.post<Author>(this.authorsPageUrl, authorData);
   }
 }

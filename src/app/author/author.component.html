@@ -1,25 +1,27 @@
-<div class = "container">
-    <div class = "card">
-        <h3 class = "text-center">Authors list</h3>
-        <div class = "card-body">
-            <table class = "table table-stiped">
-                <thead>
-                    <th>id</th>
-                    <th>name</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor = "let author of authors">
-                        <td>{{author.id}}</td>
-                        <td>{{author.name}}</td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-        </div>
-
+<div class="container">
+    <div class="card">
+      <h3 class="text-center">Authors list</h3>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let author of authors">
+              <td>{{ author.id }}</td>
+              <td>{{ author.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-
-</div>
-
-
+  
+    <div>
+      <input type="text" [(ngModel)]="newAuthorName" placeholder="Enter author name">
+      <button (click)="addAuthor()">Add Author</button>
+    </div>
+  </div>
+  

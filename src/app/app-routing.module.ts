@@ -10,11 +10,13 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { SearchComponent } from './search/search.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { LoginComponent } from './login/login.component';
 
 
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'book-details/:id', component: BookDetailsComponent },
   { path: 'books', component: BookComponent },
   { path: 'authors', component: AuthorComponent},

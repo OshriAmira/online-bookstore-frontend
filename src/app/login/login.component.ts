@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../service/auth.service';
-
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -8,26 +8,37 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor(private authService: AuthService) {}
 
-  login(event: any): void {
-    event.preventDefault(); // Prevent the default form submission behavior
-    
-    const username = event.target.elements.username.value;
-    const password = event.target.elements.password.value;
-    
-    this.authService.login(username, password).subscribe(
+  email: string = "";
+  password: string = "";
+
+
+  constructor(private http: HttpClient, private router: Router) {}
+
+  login(): void {
+    const loginData = {
+      email: this.email,
+      password: this.password
+    };
+
+    this.http.post('/api/login', loginData).subscribe(
       (response) => {
-        // Handle successful login
-        console.log('Login successful', response);
+        // Handle successful login response from the server
+        // For example, store the user token or navigate to the next page
+        this.router.navigate(['/dashboard']);
       },
       (error) => {
-        // Handle login error
-        console.error('Login failed', error);
+        // Handle error response from the server
+        // For example, display an error message to the user
       }
     );
   }
-  
 
-
+  // login(event: Event): void {
+  //   event.preventDefault();
+  //   // Add your login logic here
+  //   // For example, you can validate the username and password
+  //   // If the login is successful, navigate to the desired page
+  //   this.router.navigate(['/dashboard']);
+  // }
 }
