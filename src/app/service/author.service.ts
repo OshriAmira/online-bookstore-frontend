@@ -10,14 +10,14 @@ export class AuthorService {
 
   private authorsPageUrl = "http://localhost:8080/authors";
 
-  constructor(private http: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   getAuthors(): Observable<Author[]> {
-    return this.http.get<Author[]>(this.authorsPageUrl);
+    return this.httpClient.get<Author[]>(this.authorsPageUrl);
   }
 
-  createAuthor(name: string): Observable<Author> {
-    const authorData = { name: name };
-    return this.http.post<Author>(this.authorsPageUrl, authorData);
+  createAuthor(newAuthorName: String): Observable<Author> {
+    // const authorData = { name: newAuthorName.name };
+    return this.httpClient.post<Author>(this.authorsPageUrl, newAuthorName);
   }
 }
