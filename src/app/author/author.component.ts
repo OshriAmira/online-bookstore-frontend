@@ -11,6 +11,7 @@ export class AuthorComponent implements OnInit {
 
   authors: Author[] = [];
   newAuthorName: String = "";
+  AuthorID: number = 0;
 
   constructor(private authorService: AuthorService) {}
 
@@ -42,4 +43,20 @@ export class AuthorComponent implements OnInit {
     //   );
     }
   }
+
+  deleteAuthor(AuthorID: number): void {
+    this.authorService.deleteAuthor(AuthorID).subscribe(
+      () => {
+        console.log('Author deleted successfully.');
+        // Perform any additional actions after successful deletion
+      },
+      (error) => {
+        console.error('Error deleting author:', error);
+        // Handle the error appropriately
+      }
+    );
+
+  }
+
+
 }

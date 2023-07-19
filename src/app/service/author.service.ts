@@ -20,4 +20,9 @@ export class AuthorService {
     // const authorData = { name: newAuthorName.name };
     return this.httpClient.post<Author>(this.authorsPageUrl, newAuthorName);
   }
+
+  deleteAuthor(AuthorID: number): Observable<void>{
+    const url = `${this.authorsPageUrl}/${AuthorID}`;
+    return this.httpClient.delete<void>(url);
+  }
 }

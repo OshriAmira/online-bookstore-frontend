@@ -23,5 +23,16 @@
       <input type="text" [(ngModel)]="newAuthorName" placeholder="Enter author name">
       <button (click)="createAuthor()">Add Author</button>
     </div>
+
+    <div>
+        <input type="number" [(ngModel)]="AuthorID" placeholder="Which author to remove?">
+        <button (click)="deleteAuthor(AuthorID)">Remove Author</button>
+      </div>
+
+
+
   </div>
+
+
+
   
