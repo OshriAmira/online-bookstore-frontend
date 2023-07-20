@@ -28,6 +28,7 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { FormsModule } from '@angular/forms';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
@@ -53,6 +54,7 @@ import { BookDetailsComponent } from './book-details/book-details.component';
     FavoritesComponent,
     SearchResultsComponent,
     BookDetailsComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

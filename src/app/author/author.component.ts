@@ -30,17 +30,6 @@ export class AuthorComponent implements OnInit {
     if (this.newAuthorName.trim() !== '') {
       console.log(this.newAuthorName);
       this.authorService.createAuthor(this.newAuthorName).subscribe();
-    //   this.authorService.createAuthor(this.newAuthorName).subscribe(
-    // //     (createdAuthor: Author) => {
-    // //       console.log('Author created:', createdAuthor);
-    // //       this.newAuthorName = ''; // Clear the input field
-    // //       this.fetchAuthors(); // Fetch the updated list of authors
-    //     // },
-    //     // (error) => {
-    //     //   console.error('Error creating author:', error);
-    //     //   // Handle error case
-    //     // }
-    //   );
     }
   }
 

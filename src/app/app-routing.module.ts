@@ -11,6 +11,7 @@ import { SearchComponent } from './search/search.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
@@ -28,6 +29,7 @@ const routes: Routes = [
   // { path: 'search-results/:searchTerm', component: SearchResultsComponent },
   { path: 'search-results', component: SearchResultsComponent },
   { path: 'search', component: SearchComponent },
+  { path: 'dashboard', component: DashboardComponent },
 ];
 
 @NgModule({

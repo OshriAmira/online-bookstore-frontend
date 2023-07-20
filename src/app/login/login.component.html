@@ -1,5 +1,24 @@
-<h2>Login</h2>
-<form (submit)="login()">
+<h2 class = "text-center">Login</h2>
+
+<form (submit)="login()" [formGroup]="loginForm" class="contact-form">
+
+  <div class="form-group">
+    <input type="email" class="form-control" placeholder="Email*" id="email" formControlName="email" required>
+    <!-- Display validation error message if field is touched and invalid -->
+    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+      Email is required and must be a valid email address.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="password*" id="password" formControlName="password" required>
+    <!-- Display validation error message if field is touched and invalid -->
+    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+      Last Name is required.
+    </div>
+  </div>
+
+<!-- 
   <div>
     <label for="email">Email</label>
     <input type="email" id="email" name="email" [(ngModel)]="email" required>
@@ -7,6 +26,11 @@
   <div>
     <label for="password">Password</label>
     <input type="password" id="password" name="password" [(ngModel)]="password" required>
+  </div> -->
+  <button type="submit" class="btn btn-primary">Login</button>
+  <!-- <button type="submit">Login</button> -->
+
+  <div *ngIf="!isLoginSubmitted" class="text-center">
+    One of the details entered is incorrect
   </div>
-  <button type="submit">Login</button>
 </form>

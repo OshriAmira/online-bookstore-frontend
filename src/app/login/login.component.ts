@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { LoginService } from '../service/login.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,27 +10,39 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent {
 
-  email: string = "";
-  password: string = "";
+  // email: string = "";
+  // password: string = "";
+  isLoginSubmitted = true;
+  loginForm!: FormGroup;
 
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router,
+              private formBuilder: FormBuilder
+    ) {}
+
+  ngOnInit() {
+    this. loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
+  }
 
   login(): void {
-    const loginData = {
-      email: this.email,
-      password: this.password
-    };
-
-    this.http.post('/api/login', loginData).subscribe(
-      (response) => {
-        // Handle successful login response from the server
-        // For example, store the user token or navigate to the next page
-        this.router.navigate(['/dashboard']);
+    this.loginService.LoginAttempt(this.loginForm.value).subscribe(
+      (isAuthenticated) => {
+        if (isAuthenticated) {
+          // Login successful, navigate to the desired page
+          this.router.navigate(['/dashboard']);
+        } else {
+          // Login failed, show error message
+          this.isLoginSubmitted = false;
+          this.loginForm.reset();
+        }
       },
       (error) => {
-        // Handle error response from the server
-        // For example, display an error message to the user
+        console.error(error);
+        // Handle error, show error message
+        //this.isLoginSubmitted = false;
       }
     );
   }
