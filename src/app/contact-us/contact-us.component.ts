@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ContactFormService } from '../service/contact-form.service';
 
 
 @Component({
@@ -9,10 +10,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ContactUsComponent {
   contactForm!: FormGroup;
+  isFormSubmitted = false;
 
 
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder,
+              private contactFormService: ContactFormService
+              ) {}
 
   ngOnInit() {
     this.contactForm = this.formBuilder.group({
@@ -28,6 +32,16 @@ export class ContactUsComponent {
     if (this.contactForm.valid) {
       // Form is valid, handle form submission logic here
       console.log(this.contactForm.value);
+      this.contactFormService.submitContactForm(this.contactForm.value).subscribe(
+        () => {
+          // Handle success
+          this.isFormSubmitted = true;
+        },
+        (error) => {
+          // Handle error if needed
+          console.error('Form submission failed:', error);
+        }
+      );
       // Reset the form after successful submission
       this.contactForm.reset();
     } else {

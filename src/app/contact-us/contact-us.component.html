@@ -2,7 +2,7 @@
 
 <br><br>
 
-<form *ngIf="contactForm" [formGroup]="contactForm" (ngSubmit)="submitForm()" class="contact-form">
+<form *ngIf="!isFormSubmitted" [formGroup]="contactForm" (ngSubmit)="submitForm()" class="contact-form">
   <div class="form-group">
     <input type="text" class="form-control" placeholder="First Name*" id="firstName" formControlName="firstName" required>
     <!-- Display validation error message if field is touched and invalid -->
@@ -45,3 +45,7 @@
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<div *ngIf="isFormSubmitted" class="text-center">
+  The message was sent successfully.
+</div>
