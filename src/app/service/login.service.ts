@@ -12,14 +12,6 @@ export class LoginService {
 
   constructor(private httpClient: HttpClient) { }
 
-  // checkUser(email: string, password: string): Observable<any> {
-  //   const body = { email, password };
-  //   console.log("good", email,password);
-  //   console.log (this.httpClient.post(this.LoginPageUrl, body));
-  //   return this.httpClient.post(this.LoginPageUrl, body);
-    
-  // }
-
   LoginAttempt(formData: any): Observable<boolean>{
     const body = { formData };
     console.log (formData);

@@ -1,1 +1,2 @@
-<p>dashboard works!</p>
+<h1 class="text-center">Welcome {{ getUserName() }}</h1>
+<button *ngIf="authService.isAnyoneLoggedin()" (click)="logout()">Logout</button>

@@ -36,7 +36,8 @@
         <div class="d-flex justify-content-end">
           <form class="form-inline">
             <!-- Login icon -->
-              <a routerLink="/login" class="nav-link">
+            <a [routerLink]="authService.isAnyoneLoggedin() ? '/dashboard' : '/login'" class="nav-link">
+              <!-- <a routerLink="/login" class="nav-link"> -->
                 <i class="fas fa-user"></i>
               </a>
             

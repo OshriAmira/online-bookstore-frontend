@@ -3,6 +3,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { BookService } from './service/book.service';
 import { Book } from './model/book';
+import { AuthService } from './service/auth.service';
+
 
 @Component({
   selector: 'app-root',
@@ -16,7 +18,9 @@ export class AppComponent {
   showBanner: boolean = true;
   showFavorites: boolean = false;
 
-  constructor(private router: Router, private bookService: BookService) {
+  constructor(private router: Router, private bookService: BookService,
+              private authService: AuthService
+              ) {
     this.router.events
       .pipe(filter((event: any) => event instanceof NavigationEnd))
       .subscribe((event: any) => {

@@ -2,6 +2,8 @@ import { Component, HostListener, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookService } from 'src/app/service/book.service';
 import { Book } from 'src/app/model/book';
+import { AuthService } from 'src/app/service/auth.service';
+
 
 
 @Component({
@@ -19,7 +21,9 @@ export class NavigationBarComponent {
   categories: string[] = [];
   searchCategory: string = '';
 
-  constructor(private router: Router, public bookService: BookService) {
+  constructor(private router: Router, public bookService: BookService,
+              public authService: AuthService
+    ) {
     this.fetchCategories();
   }
 

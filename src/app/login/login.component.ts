@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../service/login.service';
+import { AuthService } from '../service/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -9,49 +10,46 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-
-  // email: string = "";
-  // password: string = "";
+  
   isLoginSubmitted = true;
   loginForm!: FormGroup;
 
 
   constructor(private loginService: LoginService, private router: Router,
-              private formBuilder: FormBuilder
+              private formBuilder: FormBuilder,   public authService: AuthService,
     ) {}
 
-  ngOnInit() {
-    this. loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
-  }
+    ngOnInit() {
+      this.loginForm = this.formBuilder.group({
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', Validators.required],
+      });
+    }
+    
 
-  login(): void {
-    this.loginService.LoginAttempt(this.loginForm.value).subscribe(
-      (isAuthenticated) => {
-        if (isAuthenticated) {
-          // Login successful, navigate to the desired page
-          this.router.navigate(['/dashboard']);
-        } else {
-          // Login failed, show error message
-          this.isLoginSubmitted = false;
-          this.loginForm.reset();
+    login(): void {
+      this.authService.login(this.loginForm.value).subscribe(
+        (response) => {
+          if (response.loginStatus) {
+            // Login successful, store the user's data in AuthService
+            this.authService.loggedInUser = {
+              firstName: response.firstName,
+              lastName: response.lastName,
+              id: response.id
+            };
+            this.router.navigate(['/dashboard']);
+          } else {
+            // Login failed, show error message
+            this.isLoginSubmitted = false;
+            this.loginForm.reset();
+          }
+        },
+        (error) => {
+          console.error(error);
+          // Handle error, show error message
         }
-      },
-      (error) => {
-        console.error(error);
-        // Handle error, show error message
-        //this.isLoginSubmitted = false;
-      }
-    );
+      );
+    }
   }
+    
 
-  // login(event: Event): void {
-  //   event.preventDefault();
-  //   // Add your login logic here
-  //   // For example, you can validate the username and password
-  //   // If the login is successful, navigate to the desired page
-  //   this.router.navigate(['/dashboard']);
-  // }
-}
