@@ -41,6 +41,12 @@
                 <strong>Email:</strong> {{ authService.loggedInUser.email }}
                 <!-- <input type="text" [(ngModel)]="editedUser.email" class="edit-input" *ngIf="isEditing"> -->
             </li>
+            <li>
+                <strong>Role:</strong>
+                <span *ngIf="authService.loggedInUser.role == 'ROLE_ADMIN'"> Administrator</span>
+                <span *ngIf="authService.loggedInUser.role == 'ROLE_USER'"> Customer</span>
+                <!-- <input type="text" [(ngModel)]="editedUser.email" class="edit-input" *ngIf="isEditing"> -->
+            </li>
             </ul>
             <!-- <button (click)="toggleEdit()">Edit Details</button>
             <button *ngIf="isEditing" (click)="saveDetails()">Save Details</button> -->
@@ -53,18 +59,27 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>id</th>
-                        <th>orderId</th>
-                        <th>user name</th>
-                        <th>status</th>
+                        <th>ID</th>
+                        <!-- <th>orderId</th> -->
+                        <th>User Name</th>
+                        <th >
+                            <!-- <div class="filter-container"> -->
+                              <select class="select-menu" id="statusFilter" [(ngModel)]="selectedStatus" (ngModelChange)="applyStatusFilter()">
+                                <option value="">Status</option> <!-- Option to show all orders without filtering -->
+                                <option *ngFor="let status of uniqueStatuses" [value]="status">{{ status }}</option>
+                              </select>
+                            <!-- </div> -->
+                          </th>
+                        <th>Created Date</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let order of orders">
                         <td>{{ order.id }}</td>
-                        <td>{{ order.userId }}</td>
+                        <!-- <td>{{ order.userId }}</td> -->
                         <td>{{ order.userName }}</td>
                         <td>{{ order.status }}</td>
+                        <td>{{ order.createdDate | date:'dd/MM/yyyy HH:mm' }}</td>
                     </tr>
                     </tbody>
                 </table>

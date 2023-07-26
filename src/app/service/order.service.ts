@@ -29,4 +29,19 @@ export class OrderService {
         order.userId == orderId))
     );
   }
+
+  getOrdersByStatus(userId: number,orderStatus: string): Observable<Order[]> {
+    return this.getOrderById(userId).pipe(
+      map(orders => orders.filter(order => 
+        order.status == orderStatus))
+    );
+  }
+
+
+
+
 }
+
+
+
+

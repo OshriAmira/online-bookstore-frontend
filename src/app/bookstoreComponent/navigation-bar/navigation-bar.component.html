@@ -39,7 +39,7 @@
             <a [routerLink]="authService.isAnyoneLoggedin() ? '/dashboard' : '/login'" class="nav-link">
               <!-- <a routerLink="/login" class="nav-link"> -->
                 <i class="fas fa-user" [ngClass]="{'login-icon': authService.isAnyoneLoggedin()}"></i>
-                <span class = "login-icon" *ngIf="authService.isAnyoneLoggedin()">Hello</span>
+                <span class = "login-icon" *ngIf="authService.isAnyoneLoggedin()"> Hello</span>
               </a>
             
             <!-- Heart icon -->

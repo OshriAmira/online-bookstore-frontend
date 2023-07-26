@@ -5,11 +5,14 @@ import { OrderItemService } from '../service/order-item.service';
 import { OrderItem } from '../model/orderItem';
 import { Order } from '../model/order';
 import { OrderService } from '../service/order.service';
+import { DatePipe } from '@angular/common'; 
+
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  providers: [DatePipe]
 })
 
 export class DashboardComponent {
@@ -21,6 +24,8 @@ export class DashboardComponent {
   isMyOrdersVisible: boolean = false;
   isShowMyBooksVisible: boolean = false;
   isShowPersonalInfo: boolean = false;
+  selectedStatus: string = '';
+  uniqueStatuses: string[] = [];
   
   constructor(public authService: AuthService, private router: Router,
               private orderItemService: OrderItemService, private orderService: OrderService
@@ -29,19 +34,14 @@ export class DashboardComponent {
   ngOnInit() {
     //this.fetchOrderItem();
     //console.log("fetchOrderItem -" + this.fetchOrderItem());
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+      this.authService.loggedInUser = JSON.parse(loggedInUser);
+    }
     if (!this.authService.isAnyoneLoggedin()) {
-    this.router.navigate(['/']);
+      this.router.navigate(['/']);
     }
     else{
-      // this.orderService.getOrderById(this.authService.loggedInUser.id).subscribe((data: Order[]) => {
-      //   this.orders = data;
-      // });
-      // this.orderItemService.getOrderItemsById(this.authService.loggedInUser.id).subscribe((data: OrderItem[]) => {
-      //   // Process the received data from the backend
-        
-      //   this.orderItems = data;
-      //   console.log("dashboard - order items" + this.orderItems);
-      // });
     }
   }
 
@@ -49,9 +49,26 @@ export class DashboardComponent {
     this.isMyOrdersVisible = !this.isMyOrdersVisible;
     this.isShowMyBooksVisible = false;
     this.isShowPersonalInfo = false;
+
     this.orderService.getOrderById(this.authService.loggedInUser.id).subscribe((data: Order[]) => {
       this.orders = data;
+      this.uniqueStatuses = Array.from(new Set(this.orders.map(order => order.status)));
     });
+    
+  }
+
+  applyStatusFilter() {
+    if (this.selectedStatus === '') {
+      // If no status is selected, show all orders
+      this.orderService.getOrderById(this.authService.loggedInUser.id).subscribe((data: Order[]) => {
+        this.orders = data;
+      });
+    } else {
+      // If a status is selected, filter the orders based on the selected status
+      this.orderService.getOrdersByStatus(this.authService.loggedInUser.id, this.selectedStatus).subscribe((data: Order[]) => {
+        this.orders = data;
+      });
+    }
   }
 
   showPersonalInfo() {

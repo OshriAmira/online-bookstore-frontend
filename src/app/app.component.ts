@@ -28,6 +28,15 @@ export class AppComponent {
   });
 
  }
+
+ ngOnInit() {
+  // Load the user data from local storage if available
+  const loggedInUser = localStorage.getItem('loggedInUser');
+  if (loggedInUser) {
+    this.authService.loggedInUser = JSON.parse(loggedInUser);
+  }
+}
+
 }
 
 

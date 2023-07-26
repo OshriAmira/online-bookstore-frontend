@@ -36,7 +36,8 @@ export class LoginComponent {
               firstName: response.firstName,
               lastName: response.lastName,
               id: response.id,
-              email: this.loginForm.value.email
+              email: this.loginForm.value.email,
+              role: response.role
             };
             console.log(response);
             this.router.navigate(['/dashboard']);

@@ -5,6 +5,10 @@
     display: block;
   }
 
+  .nav-link {
+    cursor: pointer;
+  }
+
 .social-link{
     color: white;
 }
@@ -139,6 +143,7 @@
   .carousel-indicators .active {
     opacity: 1; /* Increase the opacity of the active indicator */
   }
+
   
   .book-details {
     display: flex;
@@ -250,6 +255,8 @@
   }
    
 
+  //book-details **********
+
   .book-details-container {
     display: flex;
     flex-direction: column;
@@ -272,7 +279,6 @@
   }
 
   .book-details-description-price {
-    display: flex;
     align-items: end;
     margin-top: 580px;
     margin-left: 350px;
@@ -282,6 +288,8 @@
     width: 600px;
     height: auto;
   }
+
+    //favorite **********
 
   .favorites-container {
     display: flex;
@@ -436,4 +444,18 @@
   .user-icon {
     font-size: 50px; 
   }
+
+  .filter-container{
+    display: flex;
+    flex-direction: row;
+  }
+  
+  /* Add this to remove the frame line of the dropdown */
+  .select-menu {
+    border: none;
+    box-shadow: none;
+    text-transform: capitalize;
+    font-weight: bold
+  }
+
   
