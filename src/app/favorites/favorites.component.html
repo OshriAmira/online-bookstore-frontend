@@ -1,4 +1,4 @@
-<h1 class="text-center">My Favorites List</h1>
+<h4 class="text-center">My Favorites List</h4>
 <div class="favorites-container">
   <ng-container *ngIf="books.length > 0; else noFavorites">
     <div class="favorite-item" *ngFor="let book of books">
@@ -16,9 +16,11 @@
               <i class="fas fa-shopping-cart"></i>
             </button>
           </div>
-          <h3>{{ book.title }}</h3>
-          <p>{{ book.authorName }}</p>
-          <h3>{{ book.price }}$</h3>
+          <div class="book-info">
+            <h3>{{ book.title }}</h3>
+            <p>{{ book.authorName }}</p>
+            <h3>{{ book.price }}$</h3>
+          </div>
         </div>
       </div>
     </div>

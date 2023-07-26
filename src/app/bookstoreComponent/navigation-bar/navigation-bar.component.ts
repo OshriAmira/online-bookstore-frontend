@@ -60,5 +60,14 @@ export class NavigationBarComponent {
       this.dropdownOpen = false; // Close the dropdown if clicked outside
     }
   }
+
+  getUserName(): string {
+    // Check if the user is logged in and return the full name if available
+    if (this.authService.isAnyoneLoggedin()) {
+      const user = this.authService.loggedInUser;
+      return user.firstName + ' ' + user.lastName;
+    }
+    return '';
+  }
 }
 

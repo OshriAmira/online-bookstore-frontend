@@ -35,8 +35,10 @@ export class LoginComponent {
             this.authService.loggedInUser = {
               firstName: response.firstName,
               lastName: response.lastName,
-              id: response.id
+              id: response.id,
+              email: this.loginForm.value.email
             };
+            console.log(response);
             this.router.navigate(['/dashboard']);
           } else {
             // Login failed, show error message

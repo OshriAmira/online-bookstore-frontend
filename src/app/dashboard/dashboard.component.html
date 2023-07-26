@@ -1,2 +1,82 @@
-<h1 class="text-center">Welcome {{ getUserName() }}</h1>
-<button *ngIf="authService.isAnyoneLoggedin()" (click)="logout()">Logout</button>
+
+<div class="dashboard-container">
+    <div class = "dashboard-menu-union">
+        <div class="dashboard-welcome">
+            <h6 class="welcome-text-start">Welcome,</h6>
+            <h4 class="welcome-text-start">{{ getUserName() }}</h4>
+            <span class="logout-cursor" *ngIf="authService.isAnyoneLoggedin()" (click)="logout()">Logout</span>
+        </div>
+
+        <br><br>
+        <div class="dashboard-menu">
+                <!-- Add (click) event handlers and ngClass -->
+            <div class="menu-item" (click)="showPersonalInfo()" >Personal Information</div>
+            <div class="menu-item" (click)="showMyOrders()" >My Orders</div>
+            <div class="menu-item" (click)="showMyBooks()" >My Books</div>
+        </div>
+    </div>
+    
+
+    <div class="dashboard-content">
+        <div class="dashboard-content-text-start">
+            <i class="fas fa-user user-icon"></i>
+            <br>
+            <h2 class="content-My account-text-start">My account</h2>
+            <br><br>
+        </div>
+            <!-- Personal Information section -->
+        <div class="personal-info" *ngIf="isShowPersonalInfo">
+            <h3>Personal Information</h3>
+            <div class="personal-info-details"></div>
+            <ul>
+            <li>
+                <strong>First Name:</strong> {{ authService.loggedInUser.firstName }}
+                <!-- <input type="text" [(ngModel)]="editedUser.firstName" class="edit-input" *ngIf="isEditing"> -->
+            </li>
+            <li>
+                <strong>Last Name:</strong> {{ authService.loggedInUser.lastName }}
+                <!-- <input type="text" [(ngModel)]="editedUser.lastName" class="edit-input" *ngIf="isEditing"> -->
+            </li>
+            <li>
+                <strong>Email:</strong> {{ authService.loggedInUser.email }}
+                <!-- <input type="text" [(ngModel)]="editedUser.email" class="edit-input" *ngIf="isEditing"> -->
+            </li>
+            </ul>
+            <!-- <button (click)="toggleEdit()">Edit Details</button>
+            <button *ngIf="isEditing" (click)="saveDetails()">Save Details</button> -->
+        </div>
+  
+        <div class="container" *ngIf="isMyOrdersVisible">
+            <div class="card" *ngIf=" orders.length > 0; else noOrders">
+                <h3 class="text-center">Your Orders</h3>
+                <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>orderId</th>
+                        <th>user name</th>
+                        <th>status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let order of orders">
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.userId }}</td>
+                        <td>{{ order.userName }}</td>
+                        <td>{{ order.status }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <ng-template #noOrders>
+            <div class="text-center">
+                <p>There are no orders</p>
+            </div>
+        </ng-template>
+    </div>  <!--dashboard-content-->
+
+</div> <!--dashboard-container-->
+

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="http://localhost:4200/">{{ title }}</a>
+    <a class="navbar-brand" href="/">{{ title }}</a>
     <!-- for other screens -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -38,7 +38,8 @@
             <!-- Login icon -->
             <a [routerLink]="authService.isAnyoneLoggedin() ? '/dashboard' : '/login'" class="nav-link">
               <!-- <a routerLink="/login" class="nav-link"> -->
-                <i class="fas fa-user"></i>
+                <i class="fas fa-user" [ngClass]="{'login-icon': authService.isAnyoneLoggedin()}"></i>
+                <span class = "login-icon" *ngIf="authService.isAnyoneLoggedin()">Hello</span>
               </a>
             
             <!-- Heart icon -->
