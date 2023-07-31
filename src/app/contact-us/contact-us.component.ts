@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ContactFormService } from '../service/contact-form.service';
+import { ContactForm } from '../model/contactForm';
 
 
 @Component({
@@ -11,6 +12,7 @@ import { ContactFormService } from '../service/contact-form.service';
 export class ContactUsComponent {
   contactForm!: FormGroup;
   isFormSubmitted = false;
+  
 
 
 
@@ -58,4 +60,5 @@ export class ContactUsComponent {
       }
     });
   }
+
 }

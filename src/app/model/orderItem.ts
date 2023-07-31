@@ -4,4 +4,5 @@ export class OrderItem {
     book: string = "";
     quantity: number = 0;
     price: number = 0.0;
+    image: string  = "";
   }

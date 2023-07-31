@@ -9,10 +9,10 @@
 
         <br><br>
         <div class="dashboard-menu">
-                <!-- Add (click) event handlers and ngClass -->
             <div class="menu-item" (click)="showPersonalInfo()" >Personal Information</div>
             <div class="menu-item" (click)="showMyOrders()" >My Orders</div>
             <div class="menu-item" (click)="showMyBooks()" >My Books</div>
+            <div class="menu-item" *ngIf="authService.loggedInUser.role == 'ROLE_ADMIN'" (click)="getContactMessages()" >Messages from Contact Us</div>
         </div>
     </div>
     
@@ -24,6 +24,7 @@
             <h2 class="content-My account-text-start">My account</h2>
             <br><br>
         </div>
+
             <!-- Personal Information section -->
         <div class="personal-info" *ngIf="isShowPersonalInfo">
             <h3>Personal Information</h3>
@@ -52,6 +53,7 @@
             <button *ngIf="isEditing" (click)="saveDetails()">Save Details</button> -->
         </div>
   
+             <!-- My Orders section -->
         <div class="container" *ngIf="isMyOrdersVisible">
             <div class="card" *ngIf=" orders.length > 0; else noOrders">
                 <h3 class="text-center">Your Orders</h3>
@@ -59,30 +61,31 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <!-- <th>orderId</th> -->
+                        <th>Order Number</th>
                         <th>User Name</th>
                         <th >
-                            <!-- <div class="filter-container"> -->
                               <select class="select-menu" id="statusFilter" [(ngModel)]="selectedStatus" (ngModelChange)="applyStatusFilter()">
                                 <option value="">Status</option> <!-- Option to show all orders without filtering -->
                                 <option *ngFor="let status of uniqueStatuses" [value]="status">{{ status }}</option>
                               </select>
-                            <!-- </div> -->
                           </th>
                         <th>Created Date</th>
+                        <th>Order Details</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let order of orders">
                         <td>{{ order.id }}</td>
-                        <!-- <td>{{ order.userId }}</td> -->
                         <td>{{ order.userName }}</td>
                         <td>{{ order.status }}</td>
                         <td>{{ order.createdDate | date:'dd/MM/yyyy HH:mm' }}</td>
+                        <td>
+                            <span class="logout-cursor" (click)="moreDetails(order.id, order.totalPrice)">More Details</span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
 
@@ -91,7 +94,86 @@
                 <p>There are no orders</p>
             </div>
         </ng-template>
+
+        <div class="container" *ngIf="isMessagesVisible">
+                <div class="card" *ngIf=" contactMessages.length > 0; else noContactMessages">
+                <h3 class="text-center">Contact-Us Messages</h3>
+                <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Messages Number</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>The Message</th>
+                        <th >
+                              <select class="select-menu" id="statusFilter" [(ngModel)]="messageStatus" (ngModelChange)="applyMessagesFilter()">
+                                <option value="">Status</option> <!-- Option to show all orders without filtering -->
+                                <option *ngFor="let status of uniqueMessageStatuses" [value]="status">{{ status }}</option>
+                              </select>
+                          </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let message of contactMessages">
+                        <td>{{ message.id }}</td>
+                        <td>{{ message.firstName }}</td>
+                        <td>{{ message.lastName }}</td>
+                        <td>{{ message.phoneNumber }}</td>
+                        <td>{{ message.email }}</td>
+                        <td>{{ message.message }}</td>
+                        <td>
+                            <span class="status-text">in treatment</span>
+                            <span class="logout-cursor" (click)="updateStatus(message.id)">Mark as treated</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #noContactMessages>
+            <div class="text-center">
+                <p>There are no messages</p>
+            </div>
+        </ng-template>
+
+
     </div>  <!--dashboard-content-->
+
+
+    
+    <div class = "container" *ngIf="isShowOrderDetails"> <!--OrderDetails-container-->
+        <div class = "card">
+            <h3 class = "text-center">Order details</h3>
+            <div class = "card-body">
+                <table class = "table table-stiped">
+                    <thead>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Quantity</th>
+                        <th>Price for one book</th>
+                        <th>Price for all</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let orderItem of orderItems">
+                            <td>
+                                <img src="{{orderItem.image}}" alt="" height="100" width="80">
+                            </td>
+                            <td>{{orderItem.book}}</td>
+                            <td>{{orderItem.quantity}}</td>
+                            <td>{{orderItem.price}}</td>
+                            <td>{{orderItem.quantity*orderItem.price}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3 class = "text-center">Total Price - {{ TotalPrice() }}</h3>
+        </div>
+    </div> <!--OrderDetails-container-->
 
 </div> <!--dashboard-container-->
 

@@ -20,24 +20,27 @@ export class OrderService {
     return this.http.get<Order[]>(this.ordersUrl)
   }
 
-
   getOrderById(orderId: number): Observable<Order[]> {
-    console.log("Order - " + orderId);
-    console.log (this.getOrders());
     return this.getOrders().pipe(
       map(orders => orders.filter(order => 
-        order.userId == orderId))
+        order.id == orderId))
+    );
+  }
+
+
+  getOrderByUserId(userId: number): Observable<Order[]> {
+    return this.getOrders().pipe(
+      map(orders => orders.filter(order => 
+        order.userId == userId))
     );
   }
 
   getOrdersByStatus(userId: number,orderStatus: string): Observable<Order[]> {
-    return this.getOrderById(userId).pipe(
+    return this.getOrderByUserId(userId).pipe(
       map(orders => orders.filter(order => 
         order.status == orderStatus))
     );
   }
-
-
 
 
 }

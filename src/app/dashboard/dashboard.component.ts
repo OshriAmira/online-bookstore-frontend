@@ -6,6 +6,8 @@ import { OrderItem } from '../model/orderItem';
 import { Order } from '../model/order';
 import { OrderService } from '../service/order.service';
 import { DatePipe } from '@angular/common'; 
+import { ContactFormService } from '../service/contact-form.service';
+import { ContactForm } from '../model/contactForm';
 
 
 @Component({
@@ -19,16 +21,24 @@ export class DashboardComponent {
 
   username = '';
   userId = 0;
+  totalPrice = 0;
   // orderItems: OrderItem[] = [];
   orders: Order[] = [];
+  orderItems: OrderItem[] = [];
   isMyOrdersVisible: boolean = false;
   isShowMyBooksVisible: boolean = false;
   isShowPersonalInfo: boolean = false;
+  isShowOrderDetails: boolean = false;
+  isMessagesVisible: boolean = false;
   selectedStatus: string = '';
   uniqueStatuses: string[] = [];
+  messageStatus: string = '';
+  uniqueMessageStatuses: string[] = [];
+  contactMessages: ContactForm[] = [];
   
   constructor(public authService: AuthService, private router: Router,
-              private orderItemService: OrderItemService, private orderService: OrderService
+              private orderItemService: OrderItemService, private orderService: OrderService,
+              private contactFormService: ContactFormService
     ) {}
 
   ngOnInit() {
@@ -45,22 +55,10 @@ export class DashboardComponent {
     }
   }
 
-  showMyOrders() : void {
-    this.isMyOrdersVisible = !this.isMyOrdersVisible;
-    this.isShowMyBooksVisible = false;
-    this.isShowPersonalInfo = false;
-
-    this.orderService.getOrderById(this.authService.loggedInUser.id).subscribe((data: Order[]) => {
-      this.orders = data;
-      this.uniqueStatuses = Array.from(new Set(this.orders.map(order => order.status)));
-    });
-    
-  }
-
   applyStatusFilter() {
     if (this.selectedStatus === '') {
       // If no status is selected, show all orders
-      this.orderService.getOrderById(this.authService.loggedInUser.id).subscribe((data: Order[]) => {
+      this.orderService.getOrderByUserId(this.authService.loggedInUser.id).subscribe((data: Order[]) => {
         this.orders = data;
       });
     } else {
@@ -71,10 +69,48 @@ export class DashboardComponent {
     }
   }
 
+  showMyOrders() : void {
+    this.isMyOrdersVisible = !this.isMyOrdersVisible;
+    this.isShowMyBooksVisible = false;
+    this.isShowPersonalInfo = false;
+    this.isShowOrderDetails = false;
+    this.isMessagesVisible = false;
+
+    this.orderService.getOrderByUserId(this.authService.loggedInUser.id).subscribe((data: Order[]) => {
+      this.orders = data;
+      this.uniqueStatuses = Array.from(new Set(this.orders.map(order => order.status)));
+    });
+  }
+
+  moreDetails(orderId: number, totalPrice: number){
+    this.isMyOrdersVisible = false;
+    this.isShowOrderDetails = true;
+    this.orderItemService.getOrderItemsById(orderId).subscribe((data: OrderItem[]) => {
+      this.orderItems = data;
+      this.totalPrice = totalPrice;
+    });
+
+  }
+
+  TotalPrice(): string {
+    return this.totalPrice.toFixed(2); 
+  }
+
+  calculateTotalPrice(): string {  //Not currently in use
+    let total = 0;
+    for (const orderItem of this.orderItems) {
+      total += orderItem.quantity * orderItem.price;
+    }
+    return total.toFixed(2); 
+  }
+
+
   showPersonalInfo() {
     this.isMyOrdersVisible = false;
+    this.isShowOrderDetails = false;
     this.isShowMyBooksVisible = false;
     this.isShowPersonalInfo = !this.isShowPersonalInfo;
+    this.isMessagesVisible = false;
   }
 
 
@@ -82,10 +118,22 @@ export class DashboardComponent {
   // Function to show My Books
   showMyBooks() {
     this.isMyOrdersVisible = false;
+    this.isShowOrderDetails = false;
     this.isShowMyBooksVisible = !this.isShowMyBooksVisible;
     this.isShowPersonalInfo = false;
+    this.isMessagesVisible = false;
   }
 
+  getContactMessages() {
+    this.isMyOrdersVisible = false;
+    this.isShowOrderDetails = false;
+    this.isShowMyBooksVisible = false;
+    this.isShowPersonalInfo = false;
+    this.isMessagesVisible = !this.isMessagesVisible;
+    this.contactFormService.getContactForms().subscribe((data: ContactForm[]) => {
+      this.contactMessages = data;
+    });
+  }
 
   getUserName(): string {
     // Check if the user is logged in and return the full name if available
@@ -94,6 +142,31 @@ export class DashboardComponent {
       return user.firstName + ' ' + user.lastName;
     }
     return '';
+  }
+
+
+  applyMessagesFilter() {
+    if (this.messageStatus === '') {
+      // If no status is selected, show all Messages
+      this.contactFormService.getContactForms().subscribe((data: ContactForm[]) => {
+        this.contactMessages = data;
+      });
+    } else {
+      // If a status is selected, filter the Messages based on the selected status
+      this.contactFormService.getContactFormsByStatus(this.messageStatus).subscribe((data: ContactForm[]) => {
+        this.contactMessages = data;
+      });
+    }
+  }
+
+  updateStatus(messageId: number) {
+    // Find the message in the contactMessages array based on its messageId
+    const messageToUpdate = this.contactMessages.find(message => message.id === messageId);
+    
+    if (messageToUpdate) {
+      // Update the status of the message to 'handled'
+      messageToUpdate.status = 'handled';
+    }
   }
 
   logout(): void {

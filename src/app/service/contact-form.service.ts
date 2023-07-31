@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,map } from 'rxjs';
 import { ContactForm } from '../model/contactForm';
 
 @Injectable({
@@ -9,10 +9,26 @@ import { ContactForm } from '../model/contactForm';
 export class ContactFormService {
   private contactFormUrl = 'http://localhost:8080/messages';
 
+  contactMessages: ContactForm[] = [];
+
   constructor(private httpClient: HttpClient) {}
 
   getContactForms(): Observable<ContactForm[]> {
     return this.httpClient.get<ContactForm[]>(this.contactFormUrl);
+  }
+
+  getContactFormById(MessageId: number): Observable<ContactForm[]> {
+    return this.getContactForms().pipe(
+      map(contactMessages => contactMessages.filter(contactMessages => 
+        contactMessages.id == MessageId))
+    );
+  }
+
+  getContactFormsByStatus(messageStatus: string): Observable<ContactForm[]> {
+    return this.getContactForms().pipe(
+      map(contactMessages => contactMessages.filter(contactMessages => 
+        contactMessages.status == messageStatus))
+    );
   }
 
   submitContactForm(formData: any): Observable<any> {
