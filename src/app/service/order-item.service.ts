@@ -16,14 +16,11 @@ export class OrderItemService {
   constructor(private http: HttpClient, public authService: AuthService) { }
 
   getOrderItems(): Observable<OrderItem[]>{
-    console.log("enter  - getOrderItems");
     return this.http.get<OrderItem[]>(this.orderItemUrl)
   }
 
 
   getOrderItemsById(orderItemId: number): Observable<OrderItem[]> {
-    console.log("OrderItemId - " + orderItemId);
-    console.log (this.getOrderItems());
     return this.getOrderItems().pipe(
       map(orderItems => orderItems.filter(orderItem => 
         orderItem.orderId == orderItemId))

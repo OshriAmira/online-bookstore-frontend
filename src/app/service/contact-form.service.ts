@@ -24,10 +24,16 @@ export class ContactFormService {
     );
   }
 
-  getContactFormsByStatus(messageStatus: string): Observable<ContactForm[]> {
+  filterContactFormsByStatus(messageStatus: boolean): ContactForm[] {
+    return this.contactMessages.filter(message => message.status === messageStatus);
+  }
+
+  getContactFormsByStatus(messageStatus: boolean): Observable<ContactForm[]> {
     return this.getContactForms().pipe(
-      map(contactMessages => contactMessages.filter(contactMessages => 
-        contactMessages.status == messageStatus))
+      map(contactMessages => {
+        this.contactMessages = contactMessages; // Update the contactMessages array
+        return contactMessages.filter(message => message.status === messageStatus);
+      })
     );
   }
 
@@ -40,5 +46,10 @@ export class ContactFormService {
     return this.httpClient.delete<void>(url);
   }
 
+  updateMessageStatus(messageId: number, newStatus: boolean | null): Observable<ContactForm> {
+    const body = newStatus;
+    const url = `${this.contactFormUrl}/${messageId}`;
+    return this.httpClient.put<ContactForm>(url, body);
+  }
 
 }

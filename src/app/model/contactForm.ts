@@ -5,5 +5,5 @@ export class ContactForm {
     phoneNumber!: string;
     email!: string;
     message!: string;
-    status!: string;
+    status!: boolean;
 }

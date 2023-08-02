@@ -102,31 +102,36 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Messages Number</th>
+                        <th>Num</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Phone Number</th>
                         <th>Email</th>
                         <th>The Message</th>
-                        <th >
-                              <select class="select-menu" id="statusFilter" [(ngModel)]="messageStatus" (ngModelChange)="applyMessagesFilter()">
-                                <option value="">Status</option> <!-- Option to show all orders without filtering -->
-                                <option *ngFor="let status of uniqueMessageStatuses" [value]="status">{{ status }}</option>
+                        <th style="width: 10%;">
+                              <select class="select-menu" id="statusFilter" [ngModel]="messageStatus" (ngModelChange)="applyMessagesStatusFilter($event)">
+                                <option [ngValue]=null>All</option> <!-- Option to show all orders without filtering -->
+                                <option *ngFor="let status of uniqueMessageStatuses" [ngValue]="status">
+                                    {{ status == false ? 'New' : 'Done' }}
+                                </option>
                               </select>
                           </th>
+                        <th>Comments</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let message of contactMessages">
                         <td>{{ message.id }}</td>
-                        <td>{{ message.firstName }}</td>
-                        <td>{{ message.lastName }}</td>
-                        <td>{{ message.phoneNumber }}</td>
+                        <td style="width: 15%;">{{ message.firstName }}</td>
+                        <td style="width: 15%;">{{ message.lastName }}</td>
+                        <td style="width: 15%;">{{ message.phoneNumber }}</td>
                         <td>{{ message.email }}</td>
-                        <td>{{ message.message }}</td>
-                        <td>
-                            <span class="status-text">in treatment</span>
-                            <span class="logout-cursor" (click)="updateStatus(message.id)">Mark as treated</span>
+                        <td style="width: 20%;">{{ message.message }}</td>
+                        <td *ngIf="message.status == false"> New </td>
+                        <td *ngIf="message.status == true"> Done </td>
+                        <td style="width: 15%;">
+                            <span class="status-text">in progress</span>
+                            <span class="logout-cursor" (click)="updateStatus(message.id, true)">Mark as Done</span>
                         </td>
                     </tr>
                     </tbody>

@@ -8,6 +8,7 @@ import { OrderService } from '../service/order.service';
 import { DatePipe } from '@angular/common'; 
 import { ContactFormService } from '../service/contact-form.service';
 import { ContactForm } from '../model/contactForm';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -22,7 +23,6 @@ export class DashboardComponent {
   username = '';
   userId = 0;
   totalPrice = 0;
-  // orderItems: OrderItem[] = [];
   orders: Order[] = [];
   orderItems: OrderItem[] = [];
   isMyOrdersVisible: boolean = false;
@@ -32,18 +32,20 @@ export class DashboardComponent {
   isMessagesVisible: boolean = false;
   selectedStatus: string = '';
   uniqueStatuses: string[] = [];
-  messageStatus: string = '';
-  uniqueMessageStatuses: string[] = [];
+  messageStatus: boolean | null = null;
+  uniqueMessageStatuses: boolean[] = [];
   contactMessages: ContactForm[] = [];
   
-  constructor(public authService: AuthService, private router: Router,
-              private orderItemService: OrderItemService, private orderService: OrderService,
-              private contactFormService: ContactFormService
+  constructor(public authService: AuthService,
+              private router: Router,
+              private orderItemService: OrderItemService,
+              private orderService: OrderService,
+              private contactFormService: ContactFormService,
+              private httpClient: HttpClient
     ) {}
 
   ngOnInit() {
-    //this.fetchOrderItem();
-    //console.log("fetchOrderItem -" + this.fetchOrderItem());
+   // this.uniqueMessageStatuses = Array.from(new Set(this.contactMessages.map(contactMessage => contactMessage.status)));
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (loggedInUser) {
       this.authService.loggedInUser = JSON.parse(loggedInUser);
@@ -130,9 +132,13 @@ export class DashboardComponent {
     this.isShowMyBooksVisible = false;
     this.isShowPersonalInfo = false;
     this.isMessagesVisible = !this.isMessagesVisible;
-    this.contactFormService.getContactForms().subscribe((data: ContactForm[]) => {
-      this.contactMessages = data;
-    });
+    if (this.isMessagesVisible){
+      this.contactFormService.getContactForms().subscribe((data: ContactForm[]) => {
+        this.contactMessages = data;
+        this.uniqueMessageStatuses = Array.from(new Set(this.contactMessages
+          .map(contactMessage => contactMessage.status)));
+      });
+    }
   }
 
   getUserName(): string {
@@ -145,8 +151,9 @@ export class DashboardComponent {
   }
 
 
-  applyMessagesFilter() {
-    if (this.messageStatus === '') {
+  applyMessagesStatusFilter(status: boolean | null) {
+    this.messageStatus = status;
+    if (this.messageStatus === null) {
       // If no status is selected, show all Messages
       this.contactFormService.getContactForms().subscribe((data: ContactForm[]) => {
         this.contactMessages = data;
@@ -159,15 +166,31 @@ export class DashboardComponent {
     }
   }
 
-  updateStatus(messageId: number) {
+
+
+  updateStatus(messageId: number, newStatus: boolean) {
     // Find the message in the contactMessages array based on its messageId
     const messageToUpdate = this.contactMessages.find(message => message.id === messageId);
     
     if (messageToUpdate) {
       // Update the status of the message to 'handled'
-      messageToUpdate.status = 'handled';
+      messageToUpdate.status = true;
+      // Make the API call to update the status on the server
+      this.contactFormService.updateMessageStatus(messageId, newStatus).subscribe(
+        (response) => {
+          // Update the local contactMessages array with the updated message if needed
+          // In most cases, your backend should return the updated message after the update operation.
+          // If that's the case, you can update the local array using:
+          // this.contactMessages = this.contactMessages.map(message => message.id === messageId ? response : message);
+        },
+        (error) => {
+          // Handle the error, show an error message, etc.
+          console.error('Failed to update message status:', error);
+        }
+      );
     }
   }
+  
 
   logout(): void {
     // Set anyoneLoggedin to false
