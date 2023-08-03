@@ -10,10 +10,10 @@ import { Book } from '../model/book';
 })
 export class SearchResultsComponent implements OnInit {
   books: Book[] = [];
-  // searchResults: Book[] = [];
   searchTerm: string = '';
   searchPrice: number = 0;
   searchCategory: string = '';
+  searchAuthor: string = '';
   currentPage: number = 1;
   booksPerPage: number = 10;
   totalPages: number = 0;
@@ -23,6 +23,7 @@ export class SearchResultsComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.searchTerm = params['searchTerm'] || '';
+      this.searchAuthor = params['searchAuthor'] || '';
       this.searchPrice = +params['searchPrice'] || 0;
       this.searchCategory = params['searchCategory'] || '';
       if (this.searchTerm !== '') {
@@ -33,6 +34,8 @@ export class SearchResultsComponent implements OnInit {
         this.performsearchByPrice();
       } else if (this.searchCategory !== '') {
         this.performsearchByCategory();
+      } else if (this.searchAuthor !== '') {
+        this.performsearchByAuthor();
       }
     });
     this.totalPages = Math.ceil(this.books.length / this.booksPerPage);
@@ -60,6 +63,13 @@ export class SearchResultsComponent implements OnInit {
 
   performsearchByCategory() {
     this.bookService.searchByCategory(this.searchCategory)
+    .subscribe(books => {
+      this.books = books;
+    });
+  }
+
+  performsearchByAuthor() {
+    this.bookService.searchByAuthor(this.searchAuthor)
     .subscribe(books => {
       this.books = books;
     });

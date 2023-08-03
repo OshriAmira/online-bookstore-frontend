@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./banner.component.css']
 })
 export class BannerComponent {
-  // bannerText: string = 'In honor of Israel Book Week';
   backgroundImagePath: string = 'assets/bookPictures/isrealBookWeek2.jpg';
 
   constructor() {
@@ -14,12 +13,7 @@ export class BannerComponent {
 
     setInterval(() => {
       this.changeBackgroundImage();
-      // this.backgroundImagePath = 'assets/bookPictures/israelBookWeek.png';
       }, 3000);
-
-    // setInterval(() => {
-    //   this.bannerText = '20% discount on the whole store';
-    // }, 5000); // Change the text every 5 seconds
   }
 
   

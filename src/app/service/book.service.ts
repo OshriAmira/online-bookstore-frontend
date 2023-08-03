@@ -121,6 +121,24 @@ export class BookService {
     );
   }
   
-  
+  searchByAuthor(searchAuthor: string): Observable<Book[]> {
+    return this.getBooks().pipe(
+      map(books  => books .filter(book =>
+        book.authorName.toLowerCase().includes(searchAuthor.toLowerCase())
+        ))
+    );
+  }
+
+  getBookAuthors(): Observable<string[]> {
+    return this.getBooks().pipe(
+      map((books) => {
+        const authors = new Set<string>();
+        books.forEach((book) => {
+          authors.add(book.authorName);
+        });
+        return Array.from(authors);
+      })
+    );
+  }
   
 }

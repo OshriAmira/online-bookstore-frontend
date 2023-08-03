@@ -16,20 +16,31 @@ export class NavigationBarComponent {
   @Input() numLikedItems: number =0;
   books: Book[] = [];
   likedBooks: Book[] = [];
-  dropdownOpen = false;
+  categoriesDropdownOpen = false;
+  authorsDropdownOpen = false;
   category: string ='';
   categories: string[] = [];
   searchCategory: string = '';
+  author: string ='';
+  authors: string[] = [];
+  searchAuthor: string = '';
 
   constructor(private router: Router, public bookService: BookService,
               public authService: AuthService
     ) {
     this.fetchCategories();
+    this.fetchAuthors();
   }
 
   fetchCategories() {
     this.bookService.getBookCategories().subscribe(categories => {
       this.categories = categories;
+    });
+  }
+
+  fetchAuthors() {
+    this.bookService.getBookAuthors().subscribe(authors => {
+      this.authors = authors;
     });
   }
 
@@ -40,8 +51,22 @@ export class NavigationBarComponent {
     });
   }
 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
+  performSearchByAuthor(searchAuthor: string) {
+    this.bookService.searchByAuthor(searchAuthor)
+    .subscribe(books => {
+      this.books = books;
+    });
+  }
+
+  
+  toggleCategoriesDropdown() {
+    this.categoriesDropdownOpen = !this.categoriesDropdownOpen;
+    this.authorsDropdownOpen = false; // Close the authors dropdown when opening categories
+  }
+
+  toggleAuthorsDropdown() {
+    this.authorsDropdownOpen = !this.authorsDropdownOpen;
+    this.categoriesDropdownOpen = false; // Close the categories dropdown when opening authors
   }
 
   toggleLiked(book: Book) {
@@ -50,14 +75,16 @@ export class NavigationBarComponent {
 
   navigateTo(route: string) {
     this.router.navigateByUrl(route);
-    this.dropdownOpen = false; // Close the dropdown after navigating
+    this.authorsDropdownOpen = false; // Close the dropdowns after navigating
+    this.categoriesDropdownOpen = false;
   }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     const target = event.target as HTMLElement;
     if (!target.closest('.dropdown-menu') && !target.closest('.nav-link')) {
-      this.dropdownOpen = false; // Close the dropdown if clicked outside
+      this.authorsDropdownOpen = false; // Close the dropdowns after navigating
+    this.categoriesDropdownOpen = false;
     }
   }
 

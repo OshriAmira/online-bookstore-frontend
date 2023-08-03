@@ -402,6 +402,10 @@
     .welcome-text-start {
       margin-bottom: 10px;
     }
+
+    .user-icon {
+      font-size: 50px; 
+    }
     
     .logout-cursor {
       cursor: pointer;
@@ -410,16 +414,25 @@
   
   .dashboard-menu {
     /* Add styles to create the left-side menu */
-    width: 200px;
+    width: 250px;
     padding: 10px;
     background-color: #f0f0f0;
   }
   
   .menu-item {
+    display: flex;
+    align-items: center;
     cursor: pointer;
     margin-bottom: 10px;
     padding: 10px;
+    font-weight: bold;
     background-color: #ccc;
+  }
+
+  .menu-item i {
+    /* Add space between the icon and the caption */
+    margin-right: 12px; /* Adjust the value as per your preference */
+    font-size: 20px; 
   }
   
   .menu-item:hover {
@@ -441,9 +454,7 @@
     justify-content: start;
   }
 
-  .user-icon {
-    font-size: 50px; 
-  }
+  
 
   .filter-container{
     display: flex;

@@ -9,10 +9,30 @@
 
         <br><br>
         <div class="dashboard-menu">
-            <div class="menu-item" (click)="showPersonalInfo()" >Personal Information</div>
-            <div class="menu-item" (click)="showMyOrders()" >My Orders</div>
-            <div class="menu-item" (click)="showMyBooks()" >My Books</div>
-            <div class="menu-item" *ngIf="authService.loggedInUser.role == 'ROLE_ADMIN'" (click)="getContactMessages()" >Messages from Contact Us</div>
+            <div class="menu-item" (click)="showPersonalInfo()" >
+                <div>
+                    <i class="fas fa-user"></i>
+                    Personal Information
+                 </div>
+            </div>
+            <div class="menu-item" (click)="showMyOrders()" >
+                <div>
+                    <i class="fas fa-shopping-cart"></i>
+                    My Orders
+                </div>
+            </div>
+            <div class="menu-item" (click)="showMyBooks()" >
+                <div>
+                    <i class="fas fa-heart"></i>
+                    My Books
+                </div>
+            </div>
+            <div class="menu-item" *ngIf="authService.loggedInUser.role == 'ROLE_ADMIN'" (click)="getContactMessages()" >
+                <div>
+                    <i class="fas fa-envelope"></i>
+                    Customer Complaints
+                </div>
+            </div>
         </div>
     </div>
     

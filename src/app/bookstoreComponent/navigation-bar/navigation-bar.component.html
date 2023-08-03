@@ -14,17 +14,28 @@
           <a routerLink="/books" ruterLinkActive="active" class="nav-link">Books</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link" id="categoriesDropdown" (click)="toggleDropdown()">Categories</a>
-          <div class="dropdown-menu" aria-labelledby="categoriesDropdown" [class.show]="dropdownOpen">
+          <a class="nav-link" id="categoriesDropdown" (click)="toggleCategoriesDropdown()">Categories</a>
+          <div class="dropdown-menu" aria-labelledby="categoriesDropdown" [class.show]="categoriesDropdownOpen">
             <a class="dropdown-item" [routerLink]="['/search-results']" 
             [queryParams]="{searchTerm: '', searchPrice: 0, searchCategory: category}"
-             *ngFor="let category of categories" (click)="performSearchByCategory(category); toggleDropdown()">
+             *ngFor="let category of categories" (click)="performSearchByCategory(category); toggleCategoriesDropdown()">
              {{ category }}</a>
           </div>
-        </li>                     
-        <li class="nav-item">
-          <a routerLink="/authors" class="nav-link">Authors</a>
+        </li>  
+        
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link" id="authorsDropdown" (click)="toggleAuthorsDropdown()">Authors</a>
+          <div class="dropdown-menu" aria-labelledby="authorsDropdown" [class.show]="authorsDropdownOpen">
+            <a class="dropdown-item" [routerLink]="['/search-results']" 
+            [queryParams]="{searchTerm: '', searchPrice: 0, searchCategory: '', searchAuthor: author}"
+             *ngFor="let author of authors" (click)="performSearchByAuthor(author); toggleAuthorsDropdown()">
+             {{ author }}</a>
+          </div>
+
+          <!-- <a routerLink="/authors" class="nav-link">Authors</a> -->
         </li>
+
         <li class="nav-item">
           <a routerLink="/about" class="nav-link">About Us</a>
         </li>
