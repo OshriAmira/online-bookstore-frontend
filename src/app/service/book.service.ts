@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 export class BookService {
 
   private booksPageUrl = "http://localhost:8080/books";
-  private books: Book[] = [];
+  public books: Book[] = [];
   public booksListUpdated = new Subject<void>();
   private likedBooks: Book[] = [];
 
