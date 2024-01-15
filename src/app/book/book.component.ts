@@ -18,13 +18,20 @@ export class BookComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.bookService.getBooks().subscribe((data: Book[]) => {
-      // Process the received data from the backend
-      console.log(data);
-      this.books = data;
+    // Check if books have already been fetched
+    if (this.bookService.books.length === 0) {
+      this.bookService.getBooks().subscribe((data: Book[]) => {
+        // Process the received data from the backend
+        console.log(data);
+        this.books = data;
+        this.totalPages = Math.ceil(this.books.length / this.booksPerPage);
+        this.bookService.books = this.books; // Save books in the service
+      });
+    } else {
+      // Books have already been fetched, use the cached books
+      this.books = this.bookService.books;
       this.totalPages = Math.ceil(this.books.length / this.booksPerPage);
-      // this.logDecodedImages();
-    });
+    }
   }
 
   logDecodedImages(): void {
