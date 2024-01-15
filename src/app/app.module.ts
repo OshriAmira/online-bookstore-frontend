@@ -29,6 +29,7 @@ import { FormsModule } from '@angular/forms';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { LikedBooksService } from './service/liked-books.service';
 
 
 
@@ -67,6 +68,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   providers: [
     RoleService,
     UserService,
+    LikedBooksService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
