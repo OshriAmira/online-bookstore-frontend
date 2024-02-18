@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from '../service/book.service';
-import { Book } from '../model/book';
-import { ShoppingCart } from '../model/shoppingCart';
-import { CartItem } from '../model/cartItem';
+import { BookService } from '../../../service/book.service';
+import { Book } from '../../../model/book';
+import { ShoppingCart } from '../../../model/shoppingCart';
+import { CartItem } from '../../../model/cartItem';
 
 @Component({
   selector: 'app-favorites',

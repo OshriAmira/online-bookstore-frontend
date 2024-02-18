@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from '../service/book.service';
+import { BookService } from '../../service/book.service';
 import { Observable } from 'rxjs';
-import { Book } from '../model/book';
-import { CartItem } from '../model/cartItem';
-import { ShoppingCartService } from '../service/shopping-cart.service';
+import { Book } from '../../model/book';
+import { CartItem } from '../../model/cartItem';
+import { ShoppingCartService } from '../../service/shopping-cart.service';
 
 @Component({
   selector: 'app-book-carousel',

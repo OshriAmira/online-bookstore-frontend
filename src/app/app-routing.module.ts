@@ -3,14 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { BookComponent } from './book/book.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AuthorComponent } from './author/author.component';
-import { AboutUsComponent } from './about-us/about-us.component';
-import { ContactUsComponent } from './contact-us/contact-us.component';
-import { FavoritesComponent } from './favorites/favorites.component';
+import { AboutUsComponent } from './bookstoreComponent/bottom-bar/about-us/about-us.component';
+import { ContactUsComponent } from './bookstoreComponent/bottom-bar/contact-us/contact-us.component';
+import { FavoritesComponent } from './bookstoreComponent/navigation-bar/favorites/favorites.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
-import { SearchComponent } from './search/search.component';
+import { SearchComponent } from './bookstoreComponent/search/search.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './bookstoreComponent/navigation-bar/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 

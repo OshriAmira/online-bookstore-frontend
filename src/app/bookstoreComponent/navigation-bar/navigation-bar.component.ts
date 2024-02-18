@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./navigation-bar.component.scss']
 })
 export class NavigationBarComponent {
-  @Input() title: string = 'Bookstore';
+  @Input() title: string =''; 
   @Input() numLikedItems: number =0;
   books: Book[] = [];
   likedBooks: Book[] = [];

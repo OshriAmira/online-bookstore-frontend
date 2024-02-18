@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ContactFormService } from '../service/contact-form.service';
-import { ContactForm } from '../model/contactForm';
+import { ContactFormService } from '../../../service/contact-form.service';
+import { ContactForm } from '../../../model/contactForm';
 
 
 @Component({

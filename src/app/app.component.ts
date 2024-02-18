@@ -12,7 +12,7 @@ import { AuthService } from './service/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'online bookstor';
+  title = 'BOKA - online bookstor';
   numLikedItems: number =0;
   likedBooks: Book[] = [];
   showBanner: boolean = true;

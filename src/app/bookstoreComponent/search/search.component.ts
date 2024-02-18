@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BookService } from '../service/book.service';
-import { Book } from '../model/book';
+import { BookService } from '../../service/book.service';
+import { Book } from '../../model/book';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Observable } from 'rxjs';
