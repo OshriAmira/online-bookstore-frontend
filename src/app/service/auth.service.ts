@@ -10,7 +10,18 @@ export class AuthService {
 
   private loginPageUrl = "http://localhost:8080/login1";
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+    // Check if there's a logged-in user in localStorage on application startup
+    const storedUser = localStorage.getItem('loggedInUser');
+    this.loggedInUser = storedUser ? JSON.parse(storedUser) : null;
+
+    // Add event listener to handle user logout on window unload
+    window.addEventListener('beforeunload', () => {
+      this.logout();
+    });
+  }
+
+  
 
   // login(formData: any): Observable<any> {
   //   const body = { formData };
